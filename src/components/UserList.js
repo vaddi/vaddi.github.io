@@ -4,7 +4,7 @@
 import React from 'react';
 
 // API Stuff
-// create a mockup on mockapi.io
+// create a "users" mockup on mockapi.io
 let apiKey = "";
 let userApi = 'https://' + apiKey + '.mockapi.io/api/v1/users';
 
