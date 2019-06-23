@@ -71,7 +71,7 @@ export class AlarmClock extends React.Component {
   render() {
     return (
       <div>
-        {this.state.alerting ? <Audio url="./Sounds/Alarm.mp3" /> : ''}
+        {this.state.alerting ? <Audio src="./Sounds/Alarm.mp3" autoPlay loop hidden preload="auto" type="audio/mpeg">Your Browser doesnt support html5 audio</Audio> : ''}
         <table>
           <tbody>
             <tr>
