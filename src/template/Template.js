@@ -11,7 +11,7 @@ export const Template = (props) => (
   <Container>
     <Header content={props.content}>
       <h1><a href="/">{props.appName}</a> <small>Vaddis github page</small></h1>
-      <p>A small react Application which contains some stuff from my github repositories.</p>
+      <p>A small react Application (<a href='https://github.com/vaddi/vaddi.github.io.git' target='_blank'>vaddi.github.io</a>) which contains some stuff from my <a href='https://github.com/vaddi/?tab=repositories' target='_blank'>github</a> repositories.</p>
     </Header>
     <Content content={props.content}>
       {props.children}
