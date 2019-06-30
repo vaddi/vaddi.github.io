@@ -24,7 +24,7 @@ export class Navigation extends React.Component {
       </Nav.Item>
     );
     return (
-      <Nav variant="tabs" defaultActiveKey="/home">
+      <Nav fill variant="tabs" defaultActiveKey="/">
         {listItems}
       </Nav>
     );

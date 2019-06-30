@@ -10,7 +10,24 @@
 /* Add you own CSS (overwrite bootstrap properties) */
 
 .container {
-  font-family: monospace;
+  font-family: monospace; 
+}
+
+.container h4 {
+  margin-top: 20px;
+}
+
+.content {
+  padding: 1px 5px;
+  margin: 30px 0px 1px;
+}
+
+.nav {
+  margin-bottom: -2px;
+}
+
+.toolbar {
+  margin: 10px 0 15px;
 }
 
 header {
@@ -28,13 +45,17 @@ footer {
 	margin-top: 20px;
 }
 
-article {
+article,
+.article {
   border-bottom: 1px solid #ccc;
 	padding: 20px 5px;
 	margin-top: 10px;
 }
 
-.content {
-  padding: 1px 5px;
-  margin: 30px 0px 1px;
+.toolbar button a,
+.toolbar button a:hover,
+.toolbar button a:link {
+  color: #FFF;
+  text-decoration: none;
 }
+

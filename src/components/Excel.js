@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Form, Table, ButtonGroup, Button } from 'react-bootstrap'
+
 /*
 	Basierend auf dem Buch "Durchstarten mit React"
 	ISBN: 978-3-96009-042-7
@@ -13,7 +15,7 @@ import React from 'react';
     [2,"Jow",19],
   ];
   ...
-  <Excel headers={headers} initialData={data} />
+  <Excel headers={headers} data={data} />
 */
 
 export class Excel extends React.Component {
@@ -24,17 +26,17 @@ export class Excel extends React.Component {
     super(props);
     // Initial State
     this.state = {
-      data: this.props.initialData,
+      data: this.props.data,
       sortby: null,
       descending: false,
       edit: null,
       search: false,
 			_preSearchData: null,
     };
-    this._sort = this._sort.bind(this);
     this._showEditor = this._showEditor.bind(this);
     this._save = this._save.bind(this);
-		this._search = this._search.bind(this);
+    this._sort = this._sort.bind(this);
+    this._search = this._search.bind(this);
 		this._toggleSearch = this._toggleSearch.bind(this);
   }
   
@@ -92,7 +94,20 @@ export class Excel extends React.Component {
 	/*
 		Searching
 	*/
-	
+
+	_search(e) {
+		let needle = e.target.value.toLowerCase();
+		if(!needle) {
+			this._logSetState({data: this._preSearchData});
+			return;
+		}
+		let idx = e.target.dataset.idx;
+		let searchData = this._preSearchData.filter(function(row) {
+			return row[idx].toString().toLowerCase().indexOf(needle) > -1;
+		});
+		this._logSetState({data: searchData});
+	}
+
 	_toggleSearch() {
 		if(this.state.search) {
 			this._logSetState({
@@ -106,19 +121,6 @@ export class Excel extends React.Component {
 				search: true,
 			});
 		}
-	}
-	
-	_search(e) {
-		let needle = e.target.value.toLowerCase();
-		if(!needle) {
-			this._logSetState({data: this._preSearchData});
-			return;
-		}
-		let idx = e.target.dataset.idx;
-		let searchData = this._preSearchData.filter(function(row) {
-			return row[idx].toString().toLowerCase().indexOf(needle) > -1;
-		});
-		this._logSetState({data: searchData});
 	}
 	
 	/*
@@ -175,11 +177,34 @@ export class Excel extends React.Component {
 		Rendering
 	*/
 	
+  _renderInfoText() {
+    return <div>
+      Component: <span>{this._reactInternalFiber.elementType.name}</span><br />
+      Properties:
+      <ul>
+        <li>headers - Header Names as List</li>
+        <li>data - Data collection as List</li>
+      </ul>
+      Features:
+      <ul>
+        <li>Renders a Bootstrap Table from given Lists (data and headers) and render them as Editable Fields.</li>
+        <li>Just double-click into one Field to edit it&rsquo;s Value.</li>
+        <li>Single-click onto on of the Table Header Fields enable sorting the Column ASC/DESC/NUMERIC.</li>
+        <li>Click into the Search Button will enable the filter Fields, it will filtering the depending Column.</li>
+        <li>After editing, sorting and filtering you can exporting the Table as JSON or CVS Data File.</li>
+      </ul>
+    </div>
+  }
+  
 	_renderToolbar() {
 		return <div className="toolbar">
-			<button onClick={this._toggleSearch}>Suchen</button>
-			<a href='data.json' onClick={this._download.bind(this, 'json')}>Export JSON</a>
-			<a href='data.csv' onClick={this._download.bind(this, 'csv')}>Export CSV</a>
+      <ButtonGroup className="mr-2" aria-label="Search">
+			  <Button onClick={this._toggleSearch} title='Filter aktivieren/deaktivieren'>Suchen</Button>
+      </ButtonGroup>
+      <ButtonGroup className="mr-2" aria-label="Export">
+			  <Button onClick={this._download.bind(this, 'json')} title='Export JSON File'><a href='data.json'>JSON</a></Button>
+			  <Button onClick={this._download.bind(this, 'csv')} title='Export CSV File'><a href='data.csv'>CSV</a></Button> 
+      </ButtonGroup>
 		</div>
 	}
 	
@@ -191,7 +216,7 @@ export class Excel extends React.Component {
 			<tr onChange={this._search}>
 				{this.props.headers.map(function(_ignore, idx) {
 					return <td key={idx}>
-						<input type="text" data-idx={idx} />
+						<Form.Control type="text" data-idx={idx} />
 					</td>
 				})}
 			</tr>
@@ -201,12 +226,12 @@ export class Excel extends React.Component {
   _renderTable() {
 		let state = this.state;
     return (
-			<table>
-			<thead onClick={this._sort}>
+			<Table responsive striped hover>
+			  <thead onClick={this._sort}>
 			    <tr>
 						{this.props.headers.map(function(title, idx) {
 			        return (
-								<th key={idx}>{title}{
+								<th key={idx}>{title} {
 									state.sortby === idx
 										/* https://dev.w3.org/html5/html-author/charref */
 										? state.descending
@@ -227,9 +252,9 @@ export class Excel extends React.Component {
 			            let content = cell;
 			            let edit = state.edit;
 			            if(edit && edit.row === rowidx && edit.cell === idx) {
-			              content = <form onSubmit={this._save}>
-											<input type="text" defaultValue={content} />
-			              </form>
+			              content = <Form onSubmit={this._save}>
+											<Form.Control type="text" defaultValue={content} />
+			              </Form>
 			            }
 			            return <td key={idx} data-row={rowidx}>{content}</td>
 			          }, this)}
@@ -237,13 +262,14 @@ export class Excel extends React.Component {
 			      )
 			    }, this)}
 			  </tbody>
-			</table>
+			</Table>
     );
   }
 	
 	render() {
 		return (
 			<div>
+        {this._renderInfoText()}
 				{this._renderToolbar()}
 				{this._renderTable()}
 			</div>
