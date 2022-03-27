@@ -50,6 +50,23 @@ Run yarn to load dependencies:
 
     yarn
 
+You can use the time to Setup the Secrets:
+
+	cp src/Secret.js.example src/Secret.js
+	vi src/Secret.js
+
+```javascript
+const Secret = {
+  MOCKUPKEY: '', // key for mockapi.io
+  APIURL: '', // url to your resolver ()
+  APISECRET: '', // Secret from your resolver
+  DEFCONTARGET: '', // Datasource for Defcon
+  FEEDTARGET: '', // Datasource for Feeds
+}
+export default Secret
+```
+
+
 Run Application:
 
     yarn start

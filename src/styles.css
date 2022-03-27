@@ -9,6 +9,10 @@
 
 /* Add you own CSS (overwrite bootstrap properties) */
 
+.pull-right {
+  float: right;
+}
+
 .container {
   font-family: monospace; 
 }
@@ -47,9 +51,13 @@ footer {
 
 article,
 .article {
+  opacity: 1;
   border-bottom: 1px solid #ccc;
 	padding: 20px 5px;
 	margin-top: 10px;
+  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadein 2s; /* Firefox < 16 */
+          animation: fadein 2s;
 }
 
 .toolbar button a,
@@ -59,3 +67,19 @@ article,
   text-decoration: none;
 }
 
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

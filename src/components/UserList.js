@@ -29,7 +29,7 @@ export class UserList extends React.Component {
   }
 
   timeConverter(UNIX_timestamp){
-    let a = new Date(UNIX_timestamp * 1000);
+    let a = new Date(UNIX_timestamp);
     let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return a.getDate() + ' ' + months[a.getMonth()] + ' ' + a.getFullYear() + ' ' + a.getHours() + ':' + a.getMinutes() + ':' + a.getSeconds();
   }
@@ -56,7 +56,7 @@ export class UserList extends React.Component {
 
   render() {
     // Single Data Element redering
-    const persons = this.state.data.map((item, i) => {
+    const persons = Array.isArray( this.state.data ) && this.state.data.map((item, i) => {
       return (
         <Media key={i} as="li" className="article">
           <a href={item.imageUrl} target='_blank'>
@@ -64,7 +64,7 @@ export class UserList extends React.Component {
               width={100}
               height={100}
               className="align-self-center mr-4"
-              src={item.imageUrl}
+              src={item.avatar}
               alt={item.imageAlt}
               title={item.name}
             />
@@ -73,7 +73,7 @@ export class UserList extends React.Component {
             <h5>{item.id} - {item.name}</h5>
             <div>CreatedAt: {this.timeConverter(item.createdAt)} / {item.createdAt}</div>
             <div>Active: {this.boolConverter(item.active)}</div>
-            <div>Image: <a href={item.imageUrl} target='_blank'>{item.name}</a></div>
+            <div>Image: <a href={item.avatar} target='_blank'>{item.name}</a></div>
             <div>Alt: {item.name}</div>
           </Media.Body>
         </Media>

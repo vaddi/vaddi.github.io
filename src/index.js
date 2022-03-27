@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+//import { Secret } from '../.env';
 import { Template } from './template/Template';
 
 import './styles.css';
@@ -32,6 +33,7 @@ import { Feeds } from './components/Feeds';
 import { Excel } from './components/Excel';
 import { Defcon } from './components/Defcon';
 import { UserList } from './components/UserList';
+import { GithubUser } from './components/GithubUser';
 
 const appName = "vaddi.github.io";
 
@@ -40,14 +42,17 @@ class App extends React.Component {
     return (
         <Template appName={appName} content={content}>
 
-          <h4>An RSS Feed Component</h4>
-          <Feeds mock={Secret.APISECRET} apiurl={Secret.APIURL} target={Secret.FEEDTARGET} format="json" />
+          <h4>A GithubUser Component</h4>
+          <GithubUser target="vaddi" />
 
           <h4>A Defcon Component</h4>
           <Defcon mock={Secret.APISECRET} apiurl={Secret.APIURL} target={Secret.DEFCONTARGET} format="json" />
 
           <h4>Rest-API call Component</h4>
           <UserList mock={Secret.MOCKUPKEY} endpoint='users' />
+
+          <h4>An RSS Feed Component</h4>
+          <Feeds mock={Secret.APISECRET} apiurl={Secret.APIURL} target={Secret.FEEDTARGET} format="json" />
 
           <h4>Excel HTML Table Component</h4>
           <Excel headers={excel.headers} data={excel.data} />
@@ -61,4 +66,3 @@ ReactDOM.render(
   <App />,
   document.getElementById('app')
 );
-

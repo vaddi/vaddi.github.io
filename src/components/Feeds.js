@@ -57,7 +57,7 @@ export class Feeds extends React.Component {
   }
 
   render() {
-    const feeds = this.state.data.map((item, i) => {
+    const feeds = Array.isArray( this.state.data ) && this.state.data.map((item, i) => {
       return (
         <article key={i}>
           #{i} - <a href={item.link} target="_blank">{item.title}</a>

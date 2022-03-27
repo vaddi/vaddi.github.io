@@ -92,7 +92,7 @@ export class Defcon extends React.Component {
   }
 
   render() {
-    const defcon = this.state.data.map((item, i) => {
+    const defcon = Array.isArray( this.state.data ) && this.state.data.map((item, i) => {
       return (
         <article key={i} style={{padding: '5px', margin: '20px 0 20px 0', border: '3px solid ' + item.color }}>
           <div>Current UK Threat Level: {item.rawLevel}</div>
